@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:widgets_vs_functions/home/model.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,18 +17,21 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Isn't rebuilded because it's a const widget | const.
-            const CustomText(
-              title: 'Felipe Sales - LF7 | Widget',
-            ),
-            // Is rebuilded because it's a method | not const.
-            customText(
-              title: 'Felipe Sales - LF7 | Method',
-            ),
-          ],
+        child: Model(
+          name: 'Felipe',
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Isn't rebuilded because it's a const widget | const.
+              const CustomText(
+                title: 'Felipe Sales - LF7 | Widget',
+              ),
+              // Is rebuilded because it's a method | not const.
+              customText(
+                title: 'Felipe Sales - LF7 | Method',
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -43,7 +47,9 @@ class _HomePageState extends State<HomePage> {
     required String title,
   }) {
     debugPrint('Building CustomText Method');
-    return Text(title);
+    final model = Model.of(context);
+    final name = model?.name ?? 'Not Identified'; // Is 'Not Identified'
+    return Text('$title - $name');
   }
 }
 
@@ -58,6 +64,8 @@ class CustomText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     debugPrint('Building CustomText Widget');
-    return Text(title);
+    final model = Model.of(context);
+    final name = model?.name ?? 'Not Identified'; // Is `name` atribute
+    return Text('$title - $name');
   }
 }
