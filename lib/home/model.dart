@@ -4,8 +4,8 @@ class Model extends InheritedWidget {
   const Model({
     super.key,
     required this.name,
-    required Widget child,
-  }) : super(child: child);
+    required super.child,
+  });
 
   final String name;
 
